@@ -9,7 +9,6 @@ description:麦子学院视频下载
 
 import requests
 import bs4
-from collections import OrderedDict
 from threading import Thread
 import os
 import time
@@ -27,7 +26,7 @@ class DownloadThread(Thread):
 			f.write(res)
 
 def get_url(base_url):
-	urls=OrderedDict()
+	urls={}
 	origin = 'http://www.maiziedu.com'
 	res = requests.get(base_url)
 	soup = bs4.BeautifulSoup(res.content,'lxml')
@@ -48,7 +47,7 @@ def get_video_url(url):
 def video_download(urls,title):
 	threads=[]
 	if not os.path.exists('video/'+title):
-		os.mkdir('video/'+title)
+		os.makedirs('video/'+title)
 	# for i,value in enumerate(urls.values()):
 		# file_path='video/'+str(i+1)+'.mp4'
 	for key,value in urls.items():
@@ -71,7 +70,8 @@ if __name__== '__main__':
 	base_url：要下载教程的目录界面url
 	'''
 	# base_url="http://www.maiziedu.com/course/307/"
-	base_url="http://www.maiziedu.com/course/734/"
+	# base_url="http://www.maiziedu.com/course/734/"
+	base_url="http://www.maiziedu.com/course/661/"
 
 	start = time.time()
 	urls,title = get_url(base_url)
